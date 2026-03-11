@@ -1,0 +1,22 @@
+import type { TranslationMessages } from './schema';
+
+export const fr: TranslationMessages = {
+  siteTitle: 'That Is Rocket Science',
+  navHome: 'Accueil',
+  navLessons: 'Lecons',
+  navAbout: 'A propos',
+  changeTheme: 'Changer le theme',
+  openMenu: 'Ouvrir le menu',
+  tocTitle: 'Table des matieres',
+  tocAriaLabel: 'Table des matieres',
+  langFr: 'FR',
+  langEn: 'EN',
+  homeTitle: 'Accueil',
+  homeHeading: 'Bienvenue - TIRS prototype (Astro + Starwind)',
+  homeIntro: 'Ceci est un prototype minimal avec MDX et un composant Three.js en island.',
+  viewSampleLesson: "Voir la lecon d'exemple",
+  availableLessons: 'Lecons disponibles',
+  lessonIntro: 'Introduction aux concepts TIRS',
+  lessonHistory1: "Histoire de l'astronomie - Partie 1",
+  lessonHistory2: "Histoire de l'astronomie - Partie 2",
+};

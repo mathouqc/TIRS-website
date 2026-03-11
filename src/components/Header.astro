@@ -11,11 +11,34 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/starwind/sheet";
+import {
+  localizePath,
+  localeFromPathname,
+  pathWithoutLocale,
+  resolveLocale,
+  t,
+  type Locale,
+} from "@/lib/i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale: localeProp } = Astro.props as Props;
+const locale = resolveLocale(localeProp, localeFromPathname(Astro.url.pathname));
+const text = t(locale);
+
+function withLocale(pathname: string, nextLocale: Locale = locale): string {
+  return localizePath(pathname, nextLocale);
+}
+
+const currentPath = pathWithoutLocale(Astro.url.pathname);
+const currentSearchAndHash = `${Astro.url.search}${Astro.url.hash}`;
 
 const navLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/lessons/intro", label: "Leçons" },
-  { href: "/about", label: "À propos" },
+  { href: "/", label: text.navHome },
+  { href: "/lessons/intro", label: text.navLessons },
+  { href: "/about", label: text.navAbout },
 ];
 ---
 
@@ -24,11 +47,11 @@ const navLinks = [
 
     <!-- Logo / Titre -->
     <a
-      href="/"
+      href={withLocale('/')}
       class="flex items-center gap-3 text-2xl font-semibold tracking-tight text-primary-foreground hover:opacity-80 transition-opacity"
     >
       <img src="/logo.png" alt="TIRS logo" class="h-8 w-auto object-contain" />
-      <span>That Is Rocket Science</span>
+      <span>{text.siteTitle}</span>
     </a>
 
     <!-- Navigation desktop -->
@@ -38,17 +61,41 @@ const navLinks = [
           <Button
             variant="ghost"
             size="sm"
-            href={href}
+            href={withLocale(href)}
             class="text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground focus-visible:ring-primary-foreground/40"
           >
             {label}
           </Button>
         ))}
       </ButtonGroup>
+      <ButtonGroup class="gap-1">
+        <Button
+          variant="ghost"
+          size="sm"
+          href={`${withLocale(currentPath, 'fr')}${currentSearchAndHash}`}
+          class:list={[
+            'text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground focus-visible:ring-primary-foreground/40',
+            locale === 'fr' && 'bg-primary-foreground/20',
+          ]}
+        >
+          {text.langFr}
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          href={`${withLocale(currentPath, 'en')}${currentSearchAndHash}`}
+          class:list={[
+            'text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground focus-visible:ring-primary-foreground/40',
+            locale === 'en' && 'bg-primary-foreground/20',
+          ]}
+        >
+          {text.langEn}
+        </Button>
+      </ButtonGroup>
       <ThemeToggle
         size="sm"
         class="text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/15 hover:data-[state=on]:bg-primary-foreground/15 hover:text-primary-foreground hover:border-primary-foreground/30 focus-visible:ring-primary-foreground/40"
-        ariaLabel="Changer le thème"
+        ariaLabel={text.changeTheme}
       />
     </nav>
 
@@ -57,7 +104,7 @@ const navLinks = [
       <ThemeToggle
         size="sm"
         class="text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/15 hover:data-[state=on]:bg-primary-foreground/15 hover:text-primary-foreground hover:border-primary-foreground/30 focus-visible:ring-primary-foreground/40"
-        ariaLabel="Changer le thème"
+        ariaLabel={text.changeTheme}
       />
       <Sheet>
         <SheetTrigger asChild>
@@ -65,7 +112,7 @@ const navLinks = [
             variant="ghost"
             size="icon-sm"
             class="text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground focus-visible:ring-primary-foreground/40"
-            aria-label="Ouvrir le menu"
+            aria-label={text.openMenu}
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -74,15 +121,24 @@ const navLinks = [
         </SheetTrigger>
         <SheetContent side="left">
           <SheetHeader>
-            <SheetTitle>That Is Rocket Science</SheetTitle>
+            <SheetTitle>{text.siteTitle}</SheetTitle>
           </SheetHeader>
           <Separator />
           <nav class="flex flex-col gap-1 p-4">
             {navLinks.map(({ href, label }) => (
-              <Item as="a" href={href} size="sm">
+              <Item as="a" href={withLocale(href)} size="sm">
                 {label}
               </Item>
             ))}
+            <Separator />
+            <div class="flex gap-2 px-3 py-2">
+              <Item as="a" href={`${withLocale(currentPath, 'fr')}${currentSearchAndHash}`} size="sm" class={locale === 'fr' ? 'bg-muted' : ''}>
+                {text.langFr}
+              </Item>
+              <Item as="a" href={`${withLocale(currentPath, 'en')}${currentSearchAndHash}`} size="sm" class={locale === 'en' ? 'bg-muted' : ''}>
+                {text.langEn}
+              </Item>
+            </div>
           </nav>
         </SheetContent>
       </Sheet>

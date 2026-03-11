@@ -1,0 +1,14 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+
+const locale = 'fr';
+---
+
+<BaseLayout title="A propos" locale={locale}>
+  <Header locale={locale} />
+  <main class="prose mx-auto p-8">
+    <h1>A propos</h1>
+    <p>Site de cours TIRS en Astro.</p>
+  </main>
+</BaseLayout>
