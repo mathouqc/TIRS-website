@@ -68,30 +68,6 @@ const navLinks = [
           </Button>
         ))}
       </ButtonGroup>
-      <ButtonGroup class="gap-1">
-        <Button
-          variant="ghost"
-          size="sm"
-          href={`${withLocale(currentPath, 'fr')}${currentSearchAndHash}`}
-          class:list={[
-            'text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground focus-visible:ring-primary-foreground/40',
-            locale === 'fr' && 'bg-primary-foreground/20',
-          ]}
-        >
-          {text.langFr}
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          href={`${withLocale(currentPath, 'en')}${currentSearchAndHash}`}
-          class:list={[
-            'text-primary-foreground hover:bg-primary-foreground/15 hover:text-primary-foreground focus-visible:ring-primary-foreground/40',
-            locale === 'en' && 'bg-primary-foreground/20',
-          ]}
-        >
-          {text.langEn}
-        </Button>
-      </ButtonGroup>
       <ThemeToggle
         size="sm"
         class="text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/15 hover:data-[state=on]:bg-primary-foreground/15 hover:text-primary-foreground hover:border-primary-foreground/30 focus-visible:ring-primary-foreground/40"
@@ -131,14 +107,6 @@ const navLinks = [
               </Item>
             ))}
             <Separator />
-            <div class="flex gap-2 px-3 py-2">
-              <Item as="a" href={`${withLocale(currentPath, 'fr')}${currentSearchAndHash}`} size="sm" class={locale === 'fr' ? 'bg-muted' : ''}>
-                {text.langFr}
-              </Item>
-              <Item as="a" href={`${withLocale(currentPath, 'en')}${currentSearchAndHash}`} size="sm" class={locale === 'en' ? 'bg-muted' : ''}>
-                {text.langEn}
-              </Item>
-            </div>
           </nav>
         </SheetContent>
       </Sheet>

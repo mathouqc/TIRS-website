@@ -1,6 +1,3 @@
 ---
-import { localeFromRequestHeaders } from '@/lib/i18n-server';
-
-const locale = localeFromRequestHeaders(Astro.request.headers);
-return Astro.redirect(`/${locale}/`);
+return Astro.redirect('/fr/');
 ---

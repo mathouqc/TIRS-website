@@ -3,6 +3,9 @@ export interface TranslationMessages {
   navHome: string;
   navLessons: string;
   navAbout: string;
+  footerNavigation: string;
+  footerLanguage: string;
+  footerRights: string;
   changeTheme: string;
   openMenu: string;
   tocTitle: string;
