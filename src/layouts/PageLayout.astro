@@ -24,7 +24,7 @@ const locale = resolveLocale(localeProp);
 <BaseLayout title={title} locale={locale}>
   <Header locale={locale} />
   <main class:list={['mx-auto w-full max-w-7xl px-6 py-8 lg:py-10', mainClass]}>
-    <Prose class={proseClass}>
+    <Prose class:list={['max-w-none', proseClass]}>
       <slot />
     </Prose>
   </main>
