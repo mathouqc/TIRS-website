@@ -1,0 +1,58 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Prose from '@/components/starwind/prose/Prose.astro';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  title?: string;
+  headings?: Heading[];
+}
+
+const { title = 'Lecon', headings = [] } = Astro.props as Props;
+const tocItems = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
+---
+
+<BaseLayout title={title}>
+  <Header />
+
+  <main class="mx-auto max-w-7xl px-6 py-8 lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-10 lg:py-10">
+    {tocItems.length > 0 && (
+      <aside class="mb-8 lg:mb-0">
+        <div class="rounded-xl border border-border/60 bg-background/70 p-4 lg:sticky lg:top-6">
+          <p class="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            Table des matieres
+          </p>
+          <nav aria-label="Table des matieres">
+            <ul class="space-y-1 text-sm">
+              {tocItems.map((heading) => (
+                <li>
+                  <a
+                    href={`#${heading.slug}`}
+                    class:list={[
+                      'block rounded-md px-3 py-2 text-foreground/80 transition-colors hover:bg-muted hover:text-foreground',
+                      heading.depth === 3 && 'ml-4 text-foreground/65',
+                    ]}
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </aside>
+    )}
+
+    <article class="min-w-0">
+      <Prose class="max-w-none">
+        <slot />
+      </Prose>
+    </article>
+  </main>
+</BaseLayout>
