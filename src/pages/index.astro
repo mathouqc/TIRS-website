@@ -1,3 +1,5 @@
 ---
-return Astro.redirect('/fr/');
+import { localizePath } from '@/lib/i18n';
+
+return Astro.redirect(localizePath('/', 'fr'));
 ---

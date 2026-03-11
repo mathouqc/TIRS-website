@@ -1,16 +1,17 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro';
 import Button from '@/components/starwind/button/Button.astro';
+import { localizePath } from '@/lib/i18n';
 ---
 
 <PageLayout title="Accueil" locale="fr">
   <h1>Bienvenue - TIRS prototype (Astro + Starwind)</h1>
   <p>Ceci est un prototype minimal avec MDX et un composant Three.js en island.</p>
-  <Button href="/fr/lessons/intro" class="w-fit">Voir la lecon d'exemple</Button>
+  <Button href={localizePath('/lessons/intro', 'fr')} class="w-fit">Voir la lecon d'exemple</Button>
   <h2>Lecons disponibles</h2>
   <ul>
-    <li><a href="/fr/lessons/intro">Introduction aux concepts TIRS</a></li>
-    <li><a href="/fr/lessons/history-of-astronomy-1">Histoire de l'astronomie - Partie 1</a></li>
-    <li><a href="/fr/lessons/history-of-astronomy-2">Histoire de l'astronomie - Partie 2</a></li>
+    <li><a href={localizePath('/lessons/intro', 'fr')}>Introduction aux concepts TIRS</a></li>
+    <li><a href={localizePath('/lessons/history-of-astronomy-1', 'fr')}>Histoire de l'astronomie - Partie 1</a></li>
+    <li><a href={localizePath('/lessons/history-of-astronomy-2', 'fr')}>Histoire de l'astronomie - Partie 2</a></li>
   </ul>
 </PageLayout>
